@@ -12,7 +12,8 @@ export class GlobalService {
     public requestoptions: RequestOptions;
     constructor(public http: Http, public router: Router) {
         // this.root = location.href.split("#/");
-       this.base_path = "http://localhost:8000/";
+    //    this.base_path = "http://localhost:8000/";
+       this.base_path="https://election-new.herokuapp.com/";
         // this.base_path = 'http://172.16.1.51:8001/';
     }
 

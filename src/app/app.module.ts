@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { HttpClientModule } from '@angular/common/http';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap'
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {NgxUiLoaderModule} from 'ngx-ui-loader';
+// import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import { NgxSpinnerModule } from "ngx-spinner";
 @NgModule({
   declarations: [

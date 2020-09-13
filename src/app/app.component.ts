@@ -11,7 +11,7 @@ import {Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map, merge} from 'rxjs/operators';
 // import {Component,} from '@angular/core';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+// import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-root',

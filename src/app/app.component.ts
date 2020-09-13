@@ -129,7 +129,7 @@ this.getcity(e.item.Province)
   }
   public getJson(id) {
     this.spinner.show();
-    this.ngxService.start();
+    // this.ngxService.start();
   const url = this.base_path_service.base_path_api_url()+'state/city/' + id;
   this.base_path_service.GetRequest(url).subscribe((res)=>{
     if(res[0].json){
@@ -233,7 +233,7 @@ this.getcity(e.item.Province)
     this.newfilterArray = User;
   }
   getFirstgraphbinding(parameterValue, PollingStationNumber) {
-    this.ngxService.stop();
+    // this.ngxService.stop();
     this.showtime = true;
     console.log("graph data", "parameterValue", parameterValue, "PollingStationNumber", PollingStationNumber)
     this.barChartOptions = {

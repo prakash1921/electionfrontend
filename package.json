@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port  process.env.PORT || 5000",
+    "start": "node Server.js",
     "build": "node --max_old_space_size=2560 node_modules/@angular/cli/bin/ng build --prod --index=/src/index.html",
     "test": "ng test",
     "lint": "ng lint",
@@ -40,7 +40,8 @@
     "rxjs-compat": "^6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3",
-    "typescript": "~3.9.5"
+    "typescript": "~3.9.5",
+    "express": "~4.16.1"
   },
   "devDependencies": {
    

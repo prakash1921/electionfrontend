@@ -34,7 +34,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     // NgbModule.forRoot(),
     // ButtonsModule.forRoot(),
     BrowserAnimationsModule,
-    NgxUiLoaderModule,
+    // NgxUiLoaderModule,
     NgxSpinnerModule
   ],
   providers: [GlobalService],

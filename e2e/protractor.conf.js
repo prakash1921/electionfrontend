@@ -16,8 +16,8 @@ exports.config = {
     browserName: 'chrome'
   },
   directConnect: true,
-  // baseUrl: 'http://localhost:4200/',
-  baseUrl:'https://election-frntnew.herokuapp.com/',
+  baseUrl: 'http://localhost:4200/',
+  // baseUrl:'https://election-frntnew.herokuapp.com/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,

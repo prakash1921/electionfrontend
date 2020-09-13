@@ -3,6 +3,8 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
+    "rootDir": "./src",
+    "strict": true,
     "module": "es6",
     "baseUrl": "",
     "typeRoots": [

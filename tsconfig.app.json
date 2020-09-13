@@ -2,7 +2,7 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/app",
+    "outDir": "./out-tsc",
     "module": "es6",
     "baseUrl": "",
     "typeRoots": [

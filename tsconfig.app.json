@@ -1,15 +1,19 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/app",
-    "types": ["node"]
+    "outDir": "../out-tsc/app",
+    "module": "es6",
+    "baseUrl": "",
+    "typeRoots": [
+      "node_modules/@types"
+      ]
   },
-  "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
-  ],
   "include": [
     "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
   ]
 }

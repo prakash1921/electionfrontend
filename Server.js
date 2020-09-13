@@ -7,8 +7,10 @@ const port = process.env.PORT || 3000;
 //     res.sendFile('index.html');
 //   });
 app.get('/', function(req, res) {
-    console.log('__dirname',path.join(__dirname + '/src/index.html'))
-    res.sendFile(path.join(__dirname + '/src/index.html'));
+    // console.log('__dirname',path.join(__dirname + '/src/index.html'))
+    // res.sendFile(path.join(__dirname + '/src/index.html'));
+    
+    res.sendFile(path.join(__dirname + '/src/app/app-routing.module.ts'));
 });
 
 app.listen(port, () => console.log(`url-shortener listening on port ${port}!`));

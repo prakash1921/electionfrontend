@@ -65,9 +65,12 @@ export class AppComponent implements OnInit {
   newfilterArray: any[];
   RadioTypeValue: any = "Normal";
   JsonDataresponse: any;
-constructor(private fb: FormBuilder, private http: Http,
-  public base_path_service:GlobalService,private ngxService:NgxUiLoaderService ,private spinner: NgxSpinnerService) {
+// constructor(private fb: FormBuilder, private http: Http,
+//   public base_path_service:GlobalService,private ngxService:NgxUiLoaderService ,private spinner: NgxSpinnerService) {
     // this.onSubmit();
+    constructor(private fb: FormBuilder, private http: Http,
+      public base_path_service:GlobalService,private spinner: NgxSpinnerService) {
+    
     this.forgotpasswordForm = this.fb.group({
       voterstype: [''],
       topandbottom: [''],

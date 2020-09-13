@@ -12,13 +12,13 @@ const routes: Routes = [
       title: 'App Page'
     },
   },
-  // {
-  //   path: 'chart',
-  //   component: ChartComponent,
-  //   data: {
-  //     title: 'chart Page'
-  //   }
-  // },
+  {
+    path: 'chart',
+    component: ChartComponent,
+    data: {
+      title: 'chart Page'
+    }
+  },
 ]
 
 @NgModule({

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ChartComponent } from './chart/chart.component';
+// import { ChartComponent } from './chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
 import { HttpModule } from '@angular/http';
 import { GlobalService } from './services/GlobalServices';
@@ -19,8 +19,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from "ngx-spinner";
 @NgModule({
   declarations: [
-    AppComponent,
-    ChartComponent
+    AppComponent
+    // ChartComponent
   ],
   imports: [
     BrowserModule,

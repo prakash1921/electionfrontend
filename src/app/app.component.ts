@@ -14,7 +14,7 @@ import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 // import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { NgxSpinnerService } from "ngx-spinner";
 @Component({
-  selector: 'app-root',
+  selector: 'body',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   providers:[NgbTypeaheadConfig]

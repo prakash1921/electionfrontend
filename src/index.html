@@ -23,25 +23,32 @@
   popoiohudgfhghjj  mgjhlk
 <button type="button" value="Submit" onclick="myclick()" >
   Click here~!
-  <div id='mylink'></div>
+  <div id='mylink'>
+    <table>
+      <tr>
+        <th>Student Name</th>
+        <th>Roll No</th> 
+        <th>Age</th>
+      </tr>
+      <tr>
+        <td>Prakash D</td>
+        <td>01</td>
+        <td>24</td>
+      </tr>
+      <tr>
+        <td>Ajay S</td>
+        <td>02</td>
+        <td>23</td>
+      </tr>
+      <tr>
+        <td>Amit Y</td>
+        <td>03</td>
+        <td>25</td>
+      </tr>
+    </table>
+  </div>
   </button>
-  <!-- <script type="text/javascript">
-  function myclick(){
-      var myLink = document.getElementById('mylink');
-      myLink.onclick = function(){
-              var script = document.createElement("script");
-              script.type = "text/javascript";
-              script.src = "../../src/app/app-routing.module.ts"; 
-              document.getElementsByTagName("head")[0].appendChild(script);
-              return false;
-      }
-      document.getElementById('mylink').click();
-     
-  }
-  </script> -->
   <hr>
   <app-root></app-root>
-  <script type="text/javascript" src="typescript.min.js"></script>
-<script type="text/javascript" src="typescript.compile.min.js"></script>
 </body>
 </html>

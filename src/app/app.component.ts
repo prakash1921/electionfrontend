@@ -13,13 +13,11 @@ import {debounceTime, distinctUntilChanged, filter, map, merge} from 'rxjs/opera
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 // import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { NgxSpinnerService } from "ngx-spinner";
+import {Router} from '@angular/router';
 @Component({
   selector: 'body',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers:[NgbTypeaheadConfig]
+  template:'<router-outlet></router-outlet>'
 })
-
 export class AppComponent implements OnInit {
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
@@ -69,8 +67,13 @@ export class AppComponent implements OnInit {
 //   public base_path_service:GlobalService,private ngxService:NgxUiLoaderService ,private spinner: NgxSpinnerService) {
     // this.onSubmit();
     constructor(private fb: FormBuilder, private http: Http,
-      public base_path_service:GlobalService,private spinner: NgxSpinnerService) {
-    
+      public base_path_service:GlobalService,private spinner: NgxSpinnerService,private router:Router) {
+    this.router.events.subscribe((evt)=>{
+      if((!evt instanceof NavigationEnd)){
+        return;
+      }
+      window.scrollTo(0,0);
+    })
     this.forgotpasswordForm = this.fb.group({
       voterstype: [''],
       topandbottom: [''],

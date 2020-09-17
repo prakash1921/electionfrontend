@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     constructor(private fb: FormBuilder, private http: Http,
       public base_path_service:GlobalService,private spinner: NgxSpinnerService,private router:Router) {
     this.router.events.subscribe((evt)=>{
-      if((!evt instanceof NavigationEnd)){
+      if(!(evt instanceof onanimationend)){
         return;
       }
       window.scrollTo(0,0);

@@ -24,4 +24,4 @@ app.get('/*', function(req,res) {
     });
 app.listen(port,host, () => console.log(`url-shortener listening on port ${port}!`));
 
-app.listen(port, () => console.log(`url-shortener listening on port ${port}!`));
+// app.listen(port, () => console.log(`url-shortener listening on port ${port}!`));

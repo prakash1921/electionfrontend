@@ -11,7 +11,8 @@ app.get('/', function(req, res) {
     // res.sendFile(path.join(__dirname + '/src/index.html'));
     
     // res.sendFile(path.join(__dirname + '/src/index.html'));
-    res.sendFile(path.join(__dirname + '/src/app/app.module.ts'));
+    // res.sendFile(path.join(__dirname + '/src/app/app.module.ts'));
+    res.sendFile('index.html', { root: 'dist/Election' }
 
 });
 

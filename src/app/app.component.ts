@@ -154,6 +154,10 @@ export class AppComponent implements OnInit {
     this.stateList=[];
     this.cityvalue=[];
         this.JsonDataCopy = [];
+        this.array=[];
+        this.forgotpasswordForm.controls['voterstype'].setValue('');
+    this.forgotpasswordForm.controls['topandbottom'].setValue('')
+    this.forgotpasswordForm.controls['values'].setValue('')
     this.provicedata(e);
 
     // this.getcity(e.item.Province)

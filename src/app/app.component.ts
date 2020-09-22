@@ -7,24 +7,24 @@ import { Http, Response } from '@angular/http';
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
 import { NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
-import {Observable, Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, map, merge} from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, merge } from 'rxjs/operators';
 // import {Component,} from '@angular/core';
-import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 // import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers:[NgbTypeaheadConfig]
+  providers: [NgbTypeaheadConfig]
 })
 
 export class AppComponent implements OnInit {
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
   @ViewChild('instance') instance: NgbTypeahead;
-  stateList:any;
+  stateList: any;
   Province: any = [];
   data: any = [];
   cityvalue: any = [];
@@ -65,12 +65,13 @@ export class AppComponent implements OnInit {
   newfilterArray: any[];
   RadioTypeValue: any = "Normal";
   JsonDataresponse: any;
-// constructor(private fb: FormBuilder, private http: Http,
-//   public base_path_service:GlobalService,private ngxService:NgxUiLoaderService ,private spinner: NgxSpinnerService) {
-    // this.onSubmit();
-    constructor(private fb: FormBuilder, private http: Http,
-      public base_path_service:GlobalService,private spinner: NgxSpinnerService) {
-    
+  electionresultList: any = [];
+  // constructor(private fb: FormBuilder, private http: Http,
+  //   public base_path_service:GlobalService,private ngxService:NgxUiLoaderService ,private spinner: NgxSpinnerService) {
+  // this.onSubmit();
+  constructor(private fb: FormBuilder, private http: Http,
+    public base_path_service: GlobalService, private spinner: NgxSpinnerService) {
+
     this.forgotpasswordForm = this.fb.group({
       voterstype: [''],
       topandbottom: [''],
@@ -79,20 +80,36 @@ export class AppComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-this.provicedata();
+   
+    this.electionresultdata();
   }
- 
+
+
+  // provicedata() {
+  //   const url = this.base_path_service.base_path_api_url() + 'state/province';
+  //   this.base_path_service.GetRequest(url).subscribe((res) => {
+  //     if (res[0].json) {
+  //       console.log('rree', res[0].json)
+  //       this.data = res[0].json[0].state;
+  //       console.log("this.data", this.data)
+  //       this.Province = _.uniqBy(this.data, 'Province');
+  //     }
+  //   })
+  // }
+
+  provicedata(eid) {
+    const url = this.base_path_service.base_path_api_url() + 'newstate/province/'+eid;
+    this.base_path_service.GetRequest(url).subscribe((res) => {
+      if (res[0].json) {
+        console.log('rree', res[0].json)
+        this.data = res[0].json[0].stateData;
+        console.log("this.data", this.data)
+        this.Province = _.uniqBy(this.data, 'Province');
+        console.log("this.Province", this.Province)
+      }
+    })
+  }
   
-  provicedata(){
-const url = this.base_path_service.base_path_api_url()+'state/province';
-this.base_path_service.GetRequest(url).subscribe((res)=>{
-  if(res[0].json){
-console.log('rree',res[0].json)
-this.data=res[0].json[0].state;
-this.Province = _.uniqBy(this.data, 'Province');
-  }
-})
-  }
 
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -104,11 +121,46 @@ this.Province = _.uniqBy(this.data, 'Province');
         : this.Province.filter(v => v.Province.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
     );
 
-     
-   formatter = (x: {Province: string}) => x.Province;
-  onselect(e){
-console.log('eeee',e)
-this.getcity(e.item.Province)
+
+  formatter = (x: { Province: string }) => x.Province;
+
+  electionresultdata() {
+    const url = this.base_path_service.base_path_api_url() + 'election/electionresult';
+    this.base_path_service.GetRequest(url).subscribe((res) => {
+      if (res[0].json) {
+        console.log('election', res[0].json);
+        this.electionresultList = res[0].json;
+        console.log("this electionresultList", this.electionresultList);
+      }
+    })
+  }
+  // electionresultsearch = (text$: Observable<string>) =>
+  //   text$.pipe(
+  //     debounceTime(200),
+  //     distinctUntilChanged(),
+  //     merge(this.focus$),
+  //     merge(this.click$.pipe(filter(() => !this.instance.isPopupOpen()))),
+  //     map(term => (term === '' ? this.electionresultList
+  //       : this.electionresultList.filter(a => a.ElectionResult.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+  //   );
+
+  // electionresultformatter = (b: { ElectionResult: string }) => b.ElectionResult;
+
+
+  onelectionselect(e) {
+    console.log('eeee', e);
+    this.Province=[];
+    this.JsonDataresponse =[];
+    this.stateList=[];
+    this.cityvalue=[];
+        this.JsonDataCopy = [];
+    this.provicedata(e);
+
+    // this.getcity(e.item.Province)
+  }
+  onselect(e) {
+    console.log('eeee', e)
+    this.getcity(e.item.Province)
   }
   getcity(item) {
     console.log("fff", item)
@@ -116,7 +168,7 @@ this.getcity(e.item.Province)
     console.log("new city data", this.cityvalue)
     this.getcancel();
 
-   
+
   }
   getdata(e) {
     console.log("eeeeeeeeeeee", e)
@@ -127,35 +179,81 @@ this.getcity(e.item.Province)
     this.getcancel();
 
   }
+  // public getJson(id) {
+  //   this.spinner.show();
+  //   // this.ngxService.start();
+  //   const url = this.base_path_service.base_path_api_url() + 'state/city/' + id;
+  //   this.base_path_service.GetRequest(url).subscribe((res) => {
+  //     if (res[0].json) {
+  //       console.log('abcd', res[0].json[0]);
+  //       this.JsonDataresponse = res[0].json[0].Data;
+  //       this.JsonDataCopy = this.JsonDataresponse;
+  //       console.log("data new ", this.JsonDataresponse._body)
+  //       var uniqdata = _.uniqBy(this.JsonDataresponse, 'Candidate Name', 'Color Code', 'Political Affiliation');
+  //       console.log("uniqdata lllllllllll", uniqdata);
+  //       this.array = [];
+  //       for (var i = 0; i < uniqdata.length; i++) {
+  //         let candidatename = "candidatename" + i.toString();
+  //         var Obj = {
+  //           candidatename: uniqdata[i]['Candidate Name']
+  //         }
+  //         this.array.push({
+  //           candidatename: uniqdata[i]['Candidate Name'],
+  //           colorcode: uniqdata[i]['Color Code'],
+  //           PoliticalAffiliation: uniqdata[i]['Political Affiliation']
+  //         })
+  //       }
+  //       this.spinner.hide();
+  //       this.getdatachanged(this.RadioTypeValue)
+  //     }
+  //   })
+  // }
+
+
+
   public getJson(id) {
     this.spinner.show();
     // this.ngxService.start();
-  const url = this.base_path_service.base_path_api_url()+'state/city/' + id;
-  this.base_path_service.GetRequest(url).subscribe((res)=>{
-    if(res[0].json){
-      console.log('abcd',res[0].json[0]);
-      this.JsonDataresponse = res[0].json[0].Data;
-      this.JsonDataCopy = this.JsonDataresponse;
-      console.log("data new ", this.JsonDataresponse._body)
-      var uniqdata = _.uniqBy(this.JsonDataresponse, 'Candidate Name', 'Color Code', 'Political Affiliation');
-      console.log("uniqdata lllllllllll", uniqdata);
-      this.array=[];
-      for (var i = 0; i < uniqdata.length; i++) {
-        let candidatename = "candidatename" + i.toString();
-        var Obj = {
-          candidatename: uniqdata[i]['Candidate Name']
+    const url = this.base_path_service.base_path_api_url() + 'newstate/city/' + id;
+    this.base_path_service.GetRequest(url).subscribe((res) => {
+      if (res[0].json) {
+        console.log('abcd', res[0].json[0]);
+        this.JsonDataresponse = res[0].json[0].cityData;
+        // this.JsonDataresponse.sort((p, q) => p['Polling Station Number'] - q['Polling Station Number']);
+        this.JsonDataCopy = this.JsonDataresponse;
+        console.log("data new ", this.JsonDataresponse._body)
+        var uniqdata = _.uniqBy(this.JsonDataresponse, 'Candidate Name', 'Color Code', 'Political Affiliation');
+        console.log("uniqdata lllllllllll", uniqdata);
+        this.array = [];
+        for (var i = 0; i < uniqdata.length; i++) {
+          let candidatename = "candidatename" + i.toString();
+          var Obj = {
+            candidatename: uniqdata[i]['Candidate Name']
+          }
+          this.array.push({
+            candidatename: uniqdata[i]['Candidate Name'],
+            colorcode: uniqdata[i]['Color Code'],
+            PoliticalAffiliation: uniqdata[i]['Political Affiliation']
+          })
         }
-        this.array.push({
-          candidatename: uniqdata[i]['Candidate Name'],
-          colorcode: uniqdata[i]['Color Code'],
-          PoliticalAffiliation: uniqdata[i]['Political Affiliation']
-        })
+        this.spinner.hide();
+        this.getdatachanged(this.RadioTypeValue)
       }
-      this.spinner.hide();
-      this.getdatachanged(this.RadioTypeValue)
-    }
-  })
-}
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  
   // public getJson(id) {
   //   this.http.get('./assets/' + id + '.json').subscribe(
   //     (data) => {
@@ -339,7 +437,20 @@ this.getcity(e.item.Province)
         fontSize: '20'
       }
     };
-    this.barChartLabels = _.uniq(PollingStationNumber);
+    console.log("console.log",PollingStationNumber)
+    var newtakepoll=[];
+    if(this.forgotpasswordForm.value.values=='' || this.forgotpasswordForm.value.values==undefined || this.forgotpasswordForm.value.values==null){
+      newtakepoll= _.uniq(PollingStationNumber);
+    }else{
+
+      var uniqpollno=_.uniq(PollingStationNumber);
+      newtakepoll= _.take(uniqpollno, this.forgotpasswordForm.value.values)
+    }
+    console.log("new take poll",newtakepoll)
+    console.log("input value",this.forgotpasswordForm.value.values)
+    // _.take(PollingStationNumber, )
+    // this.barChartLabels = _.uniq(PollingStationNumber);
+    this.barChartLabels = newtakepoll;
     this.barChartType = 'bar';
     this.barChartLegend = true;
     this.barChartData = parameterValue;
@@ -374,8 +485,8 @@ this.getcity(e.item.Province)
   //     }
   //   }
 
-  getfilterpart(data,n){
-    console.log('new data',data)
+  getfilterpart(data, n) {
+    console.log('new data', data)
     var totalelctorwise = _.uniqBy(data, 'Total Votes');
     console.log("uniqdata", data);
     console.log('totalelctorwisetotalelctorwise', totalelctorwise)
@@ -384,35 +495,35 @@ this.getcity(e.item.Province)
       totalarray.push(totalelctorwise[i]['Total Votes'])
     }
     console.log('totalarray', totalarray);
-    var newTotalArray=[];
-    var newTotalArraygroup=[];
-  //   console.log('_.groupBy(',_.groupBy(JSON.parse(this.JsonData._body)))
-  // console.log('_.union(,',_.uniq(JSON.parse(this.JsonData._body)))
+    var newTotalArray = [];
+    var newTotalArraygroup = [];
+    //   console.log('_.groupBy(',_.groupBy(JSON.parse(this.JsonData._body)))
+    // console.log('_.union(,',_.uniq(JSON.parse(this.JsonData._body)))
     for (var i = 0; i < totalarray.length; i++) {
 
       for (var j = 0; j < data.length; j++) {
         if (totalarray[i] == data[j]['Total Votes']) {
           newTotalArray.push(data[j])
-         
+
           // newTotalArray.push(uniqdata.filter((e) => e['Total Votes'] == totalarray[i]))
-        
+
         }
 
       }
       newTotalArraygroup.push(newTotalArray)
-      newTotalArray=[];
+      newTotalArray = [];
     }
-  
-    console.log('newTotalArraynewTotalArray',newTotalArray)
-    console.log('newTotalArraynewTotalArray',newTotalArraygroup)
-    console.log('newTotalArraynewTotalArray',newTotalArraygroup[0],newTotalArraygroup[1])
+
+    console.log('newTotalArraynewTotalArray', newTotalArray)
+    console.log('newTotalArraynewTotalArray', newTotalArraygroup)
+    console.log('newTotalArraynewTotalArray', newTotalArraygroup[0], newTotalArraygroup[1])
 
     // console.log('newTotalArraynewTotalArray filter',_.flatten(newTotalArraygroup))
-    var newData=[];
-    for(var i=0;i< n;i++){
-newData.push(newTotalArraygroup[i])
+    var newData = [];
+    for (var i = 0; i < n; i++) {
+      newData.push(newTotalArraygroup[i])
     }
-    console.log('newDatanewData',_.flatten(newData))
+    console.log('newDatanewData', _.flatten(newData))
     this.forloopdata(_.flatten(newData));
   }
 
@@ -420,6 +531,7 @@ newData.push(newTotalArraygroup[i])
     var a = this.forgotpasswordForm.value.voterstype;
     var b = this.forgotpasswordForm.value.topandbottom;
     var c = this.forgotpasswordForm.value.values;
+    console.log("a b c",this.forgotpasswordForm.value.voterstype,"   ",this.forgotpasswordForm.value.topandbottom,"   ",this.forgotpasswordForm.value.values)
     var topbotmdata = [];
     var JsonData = [];
     var dataBody = this.JsonDataresponse;
@@ -456,7 +568,7 @@ newData.push(newTotalArraygroup[i])
 
           // )
           topbotmdata = JsonData.sort((p, q) => p['Total Votes'] - q['Total Votes']);
-          
+
         }
 
       } else {
@@ -467,7 +579,7 @@ newData.push(newTotalArraygroup[i])
       this.result = [];
       this.result = _.take(topbotmdata, c)
       console.log(' Electors top or botton data', this.result)
-      this.getfilterpart(JsonData,c);
+      this.getfilterpart(JsonData, c);
       // this.forloopdata(this.result)
 
     } else if (a == "Electors") {
@@ -479,16 +591,16 @@ newData.push(newTotalArraygroup[i])
       this.result = [];
       this.result = _.take(topbotmdata, c)
       console.log(' Electors top or botton data', this.result);
-      this.getfilterpart(JsonData,c);
+      this.getfilterpart(JsonData, c);
       // this.forloopdata(this.result)
     }
-  
+
   }
   getcancel() {
-this.getdatachanged(this.RadioTypeValue);
-this.forgotpasswordForm.controls['voterstype'].setValue('');
-this.forgotpasswordForm.controls['topandbottom'].setValue('')
-this.forgotpasswordForm.controls['values'].setValue('')
+    this.getdatachanged(this.RadioTypeValue);
+    this.forgotpasswordForm.controls['voterstype'].setValue('');
+    this.forgotpasswordForm.controls['topandbottom'].setValue('')
+    this.forgotpasswordForm.controls['values'].setValue('')
 
   }
 }

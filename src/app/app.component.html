@@ -12,6 +12,29 @@
               </div>
               <div class="card-body" style="background-color: #f5ebeb;">
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+    <label>Select Election Result Wise</label>
+</div>
+</div>
+<div class="row" *ngIf="electionresultList.length!=0" style="margin-bottom: 8px">
+    <div class="col-md-2">
+        <select (change)="onelectionselect($event.target.value)">
+            <option value='' selected disabled>Select Result</option>
+            <option  *ngFor="let item of electionresultList" [value]='item.ElectionID' >{{item.ElectionResult}}</option>
+        </select>
+        
+  <!-- <input id="typeahead-template" type="text"  [(ngModel)]="electionresultList" [ngbTypeahead]="electionresultsearch" [resultTemplate]="xy"
+  [inputFormatter]="electionresultformatter"  (selectItem)='onelectionselect($event)'/>
+  <ng-template #xy let-p="result" let-q="term">
+    <ngb-highlight [result]="p.ElectionResult" [term]="q"></ngb-highlight>
+  </ng-template> -->
+</div>
+</div>
+
+                </div>
+
                     <div class="col-md-5">
                         <div class="row">
                             <div class="col-md-12">

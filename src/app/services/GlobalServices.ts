@@ -1,10 +1,15 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, Request, RequestMethod } from '@angular/http';
 import { Route, Router } from "@angular/router";
-import { Observable, Subject } from 'rxjs/Rx';
-import 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
-import * as Rx from 'rxjs/Rx';
+import 'rxjs/add/operator/catch';
+
+// import { Observable, Subject } from 'rxjs/Rx';
+// import 'rxjs/Rx';
+// import 'rxjs/add/operator/map';
+// import * as Rx from 'rxjs/Rx';
 @Injectable()
 export class GlobalService {
     public base_path: string;
@@ -12,8 +17,8 @@ export class GlobalService {
     public requestoptions: RequestOptions;
     constructor(public http: Http, public router: Router) {
         // this.root = location.href.split("#/");
-    //    this.base_path = "http://localhost:8000/";
-       this.base_path="https://election-new.herokuapp.com/";
+       this.base_path = "http://localhost:8000/";
+    //    this.base_path="https://election-new.herokuapp.com/";
         // this.base_path = 'http://172.16.1.51:8001/';
     }
 

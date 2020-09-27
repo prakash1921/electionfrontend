@@ -1,242 +1,218 @@
 
-
-<div class='container' style="margin-top: 17px">
-    <!-- <input type="button" value='submit' (click)='getformdata()' [disabled]='disable'>
-  
-    <input type="button" value='submit' (click)='getformdata()' [disabled]='disable'> -->
-   <div class="row">
-       <div class="col">
-          <div class="card">
-              <div class="card-header">
-                Select City Vise
-              </div>
-              <div class="card-body" style="background-color: #f5ebeb;">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12">
-    <label>Select Election Result Wise</label>
-</div>
-</div>
-<div class="row" *ngIf="electionresultList.length!=0" style="margin-bottom: 8px">
-    <div class="col-md-2">
-        <select (change)="onelectionselect($event.target.value)">
-            <option value='' selected disabled>Select Result</option>
-            <option  *ngFor="let item of electionresultList" [value]='item.ElectionID' >{{item.ElectionResult}}</option>
-        </select>
-        
-  <!-- <input id="typeahead-template" type="text"  [(ngModel)]="electionresultList" [ngbTypeahead]="electionresultsearch" [resultTemplate]="xy"
-  [inputFormatter]="electionresultformatter"  (selectItem)='onelectionselect($event)'/>
-  <ng-template #xy let-p="result" let-q="term">
-    <ngb-highlight [result]="p.ElectionResult" [term]="q"></ngb-highlight>
-  </ng-template> -->
-</div>
-</div>
-
-                </div>
-
-                    <div class="col-md-5">
-                        <div class="row">
-                            <div class="col-md-12">
-    <label>Select State</label>
-</div>
-</div>
-<div class="row" style="margin-bottom: 8px">
-    <div class="col-md-2">
-        <!-- <select (change)="getcity($event.target.value)">
-            <option value='' selected disabled>Select State</option>
-            <option  *ngFor="let item of Province" [value]='item.Province' >{{item.Province}}</option>
-        </select> -->
-        
-  <input id="typeahead-template" type="text"  [(ngModel)]="stateList" [ngbTypeahead]="search" [resultTemplate]="rt"
-  [inputFormatter]="formatter"  (selectItem)='onselect($event)'/>
-  <ng-template #rt let-r="result" let-t="term">
-    <!-- <div (click)='getId(r.id_product)'>{{r.name_product}}</div> -->
-    <ngb-highlight [result]="r.Province" [term]="e"></ngb-highlight>
-  </ng-template>
-</div>
-</div>
-
-                </div>
-
-                <div class="col-md-2">
-                    <div class="row">
-                        <div class="col-md-12">
-<label>Select City</label>
-</div>
-</div>
-<div class="row">
-<div class="col-md-2" *ngIf="cityvalue.length==1">
-    <select (onload)="getdata($event.target.value)" (change)="getdata($event.target.value)" >
-        <option value='' selected disabled>Select City</option>
-        <!-- <option  *ngFor="let item of cityvalue" [value]='item["Federal Electoral Districts"]' >{{item["Federal Electoral Districts"]}}</option> -->
-        <!-- <option value='Electors'>Electors</option> -->
-        <option  *ngFor="let item of cityvalue" [value]='item.Code' >{{item["Federal Electoral Districts"]}}</option>
-
-    </select>
-</div>
-<div class="col-md-2" *ngIf="cityvalue.length!=1">
-    <select (change)="getdata($event.target.value)" >
-        <option value='' selected disabled>Select City</option>
-        <!-- <option  *ngFor="let item of cityvalue" [value]='item["Federal Electoral Districts"]' >{{item["Federal Electoral Districts"]}}</option> -->
-        <!-- <option value='Electors'>Electors</option> -->
-        <option  *ngFor="let item of cityvalue" [value]='item.Code' >{{item["Federal Electoral Districts"]}}</option>
-
-    </select>
-</div>
-</div>
-
-            </div>
-                </div>
-                <div class="row" style="margin-top: 7px;">
-                    <div class="col-md-12">
-                        <label>Select Poll :  </label>
-                        <label style="margin-left: 14px" class="form-check-inline">
-                            <!-- <input class="form-check-input" type="radio" name="mode" [value]="true" [(ngModel)]="rule.mode"> -->
-                            <input class="form-check-input" type="radio" name="mode" value="Normal"  checked (change)="getdatachanged('Normal')">Normal
-                        
-                        </label>
-                        <label class="form-check-inline">
-                            <input class="form-check-input" type="radio" name="mode" value="Advance Polls" (change)="getdatachanged('Advance Polls')">Advance Polls
-                        
-                            <!-- <input class="form-check-input" type="radio" name="mode" [value]="false" [(ngModel)]="rule.mode"> -->
-                        </label>
-                        <label class="form-check-inline">
-                            <input class="form-check-input" type="radio" name="mode" value="Groups" (change)="getdatachanged('Groups')">Groups
-                        
-                            <!-- <input class="form-check-input" type="radio" name="mode" [value]="false" [(ngModel)]="rule.mode"> -->
-                        </label>
-                        </div>
-                </div>
-                </div>
-</div>
-
-
-  
-  <hr>
-  <ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple"
->
-  <p style="font-size: 20px; color: white">Loading...</p>
-</ngx-spinner>
-<div class="conatiner" *ngIf="showtime"  style="border: solid darkgrey;">
-
-    <!-- <ngx-ui-loader></ngx-ui-loader> -->
-    <div class="row">
-<div class="col-md-9">
-    <div *ngIf="showtime" class="graph_container"  >
-        <canvas baseChart
-        [datasets]="barChartData" 
-        [labels]="barChartLabels" 
-        [options]="barChartOptions"
-         [legend]="barChartLegend" 
-         [chartType]="barChartType"
-         width="450" height="350"
-         ></canvas>
-    </div>
-    
-</div>
-<!-- <div class="col-md-1">
-    <span class="vl"></span>
-</div> -->
-<div class="col-md-3 verticalLine" >
-    <div class='container' *ngIf="showtime" style="margin-top: 17px">
+<!-- <div class="col-md-12 d-sm-none d-md-block d-none d-sm-block"> -->
+    <div class='container' style="margin-top: 17px">
         <div class="row">
             <div class="col">
-               <form [formGroup]="forgotpasswordForm" (ngSubmit)="onsave()">
-               <div class="card">
-                   <div class="card-header">
-                   Filters 
-                   </div>
-                   <div class="card-body" style="background-color: #f5ebeb;">
-                       <div class="row">
-                           <div class="col-md-12">
-                               <div class="row">
-                                   <div class="col-md-12">
-                                    <label>Total Votes</label>
-                                   </div>
-                               </div>
-                               <div class="row">
-                                <div class="col-md-12">
-                                    <select 
-                                    formControlName="voterstype" >
-                                    <option value='' selected disabled>Select Type</option>
-                                    <option value='Total_Votes'>Total Voters</option>
-                                    <option value='Electors'>Electors</option>
-                                    </select>
+                <div class="card">
+                    <div class="card-header" style="text-align: center;font-weight: bold;color: inherit;">
+                        Election Canada Analysis
+                    </div>
+                    <div class="card-body" style="background-color: #f5ebeb;">
+                        <div class="row">
+                            <div class="col-md-12" style="border-bottom: 2px solid gray;margin-bottom: 13px;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Select Election </label>
+                                    </div>
                                 </div>
-                            </div>
-                           
-                           </div>
-
-                           <div class="col-md-12" style="margin-top: 11px;">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label>Select Top or Bottom</label>
+                                <div class="row"  style="margin-bottom: 8px">
+                                    <div class="col-md-2">
+                                        <select (change)="onelectionselect($event.target.value)">
+                                            <option value='' selected disabled>Select Result</option>
+                                            <option *ngFor="let item of electionresultList" [value]='item.ElectionID'>
+                                                {{item.ElectionID}}&#x1D57;&#x02B0; election</option>
+                                        </select>
+                                    </div>
                                 </div>
+    
                             </div>
-                            <div class="row">
-                             <div class="col-md-12">
-                                <select  formControlName="topandbottom"
-                                >
-                                <option value='' selected disabled>Select Top or Bottom</option>
-                                <option value='Top'>Top</option>
-                                <option value='Bottom'>Bottom</option>
-                                
-                                
-                                </select>
-                             </div>
-                         </div>
-                        
+    
+                            <div class="col-md-5" style="margin-bottom: 14px;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Select Province/Territory</label>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 8px">
+                                    <div class="col-md-2">
+                                        <input id="typeahead-template" type="text" [(ngModel)]="stateList"
+                                            [ngbTypeahead]="search" [resultTemplate]="rt" [inputFormatter]="formatter"
+                                            (selectItem)='onselect($event)' style="width: 253px;" />
+                                        <ng-template #rt let-r="result" let-t="term">
+                                            <ngb-highlight [result]="r.Province" [term]="e"></ngb-highlight>
+                                        </ng-template>
+                                    </div>
+                                </div>
+    
+                            </div>
+    
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Federal Electoral District</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2" *ngIf="cityvalue.length==1">
+                                        <select (change)="getdata($event.target.value)">
+                                            <option value='' selected disabled> Select Federal Electrol District</option>
+                                            <option *ngFor="let item of cityvalue" [value]='item.Code'>
+                                                {{item["Federal Electoral Districts"]}}</option>
+    
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2" *ngIf="cityvalue.length!=1">
+                                        <select (change)="getdata($event.target.value)">
+                                            <option value='' selected disabled> Select Federal Electrol District</option>
+                                            <option value=' '> </option>
+                                            <option *ngFor="let item of cityvalue" [value]='item.Code'>
+                                                {{item["Federal Electoral Districts"]}}</option>
+    
+                                        </select>
+                                    </div>
+                                </div>
+    
+                            </div>
                         </div>
-                        <div class="col-md-12" style="margin-top: 11px;">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label>Values</label>
-                                </div>
+                        <div class="row" style="margin-top: 7px;">
+                            <div class="col-md-12">
+                                <label>Select Polltype : </label>
+                                <label style="margin-left: 14px" class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mode" value="Normal" checked
+                                        (change)="getdatachanged('Normal')">Normal Polls
+    
+                                </label>
+                                <label class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mode" value="Advance Polls"
+                                        (change)="getdatachanged('Advance Polls')">Advance Polls
+                                </label>
+                                <label class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mode" value="Groups"
+                                        (change)="getdatachanged('Groups')">Grouped Polls
+                                </label>
                             </div>
-                            <div class="row">
-                             <div class="col-md-12">
-                                <select  formControlName="values"
-                                >
-                                <option value='' selected disabled>Values</option>
-                                <option value='5'>5</option>
-                                <option value='10'>10</option>
-                                <option value='15'>15</option>
-                                
-                                </select>
-                             </div>
-                         </div>
-                        
                         </div>
-                        <div class="col-md-12" style="margin-left: 11px;">
-                            <div class="row" style="margin-top: 21px;">
-                            
-                            
-                            <button type="submit" style="margin: 4px;">Submit</button>
-                            <button type="reset" style="margin: 4px;"  (click)='getcancel()'>Cancel</button>
+                    </div>
+                </div>
+    
+    
+    
+                <hr>
+                <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+                    <p style="font-size: 20px; color: white">Loading...</p>
+                </ngx-spinner>
+                <div class="conatiner" *ngIf="showtime==true" style="border: solid darkgrey;">
+    
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div *ngIf="showtime==true" class="graph_container">
+                                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                                    [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType"
+                                    width="450" height="350"></canvas>
                             </div>
+    
+                        </div>
+            
+                        <div class="col-md-3 verticalLine">
+                            <div class='container' *ngIf="showtime==true" style="margin-top: 17px">
+                                <div class="row">
+                                    <div class="col">
+                                        <form [formGroup]="forgotpasswordForm" (ngSubmit)="onsave()">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    Aditional Filters
+                                                </div>
+                                                <div class="card-body" style="background-color: #f5ebeb;">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label>Select vote type</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <select formControlName="voterstype">
+                                                                        <option value='' selected disabled>Secret vote type
+                                                                        </option>
+                                                                        <option value='Total_Votes'>Total ballouts</option>
+                                                                        <option value='Electors'>Total electors</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+    
+                                                        </div>
+    
+                                                        <div class="col-md-12" style="margin-top: 11px;">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label>Select from</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <select formControlName="topandbottom">
+                                                                        <option value='Top' [selected]="true">Top</option>
+                                                                        <option value='Bottom'>Bottom</option>
+    
+    
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+    
+                                                        </div>
+                                                        <div class="col-md-12" style="margin-top: 11px;">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label>Number of Values</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <select formControlName="values">
+                                                                        <option value='5' [selected]="true">5</option>
+                                                                        <option value='10'>10</option>
+                                                                        <option value='15'>15</option>
+    
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+    
+                                                        </div>
+                                                        <div class="col-md-12" style="margin-left: 11px;">
+                                                            <div class="row" style="margin-top: 21px;">
+    
+    
+                                                                <button type="submit" style="margin: 4px;">Submit</button>
+                                                                <button type="reset" style="margin: 4px;"
+                                                                    (click)='getcancel()'>Clear</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+    
+    
+    
                             </div>
-                       </div>
-                      
-       </div>
-       </div>
-       </form>
-       </div>
-       </div>
-           
-           
+    
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 35px;">
+    
+                </div>
+    
+            </div>
+            </div>
+            </div>
+        <!-- </div> -->
+        
+     <!-- <div class="col-md-12 d-block d-sm-none d-none d-sm-block d-md-none"> -->
+      
           
-       </div>
-
-</div>
- </div>
-</div>
-<div style="margin-top: 35px;">
-
-</div>
-
-<router-outlet></router-outlet>
+        <router-outlet></router-outlet>
